@@ -22,7 +22,7 @@ print(mnist.validation.images.shape, mnist.validation.labels.shape)
 
 import tensorflow as tf
 sess = tf.InteractiveSession()
-x = tf.placeholder(tf.float32, [None, 784])
+x = tf.placeholder(tf.float32, [None, 28*28])
 
 W = tf.Variable(tf.zeros([784, 10]))
 b = tf.Variable(tf.zeros([10]))
