@@ -9,7 +9,7 @@ tlds = ( 'com', 'edu', 'net', 'org', 'gov' )
 
 for i in range(randrange(5, 11)):
     dtint = randrange(maxsize)  # pick date
-    dtstr = ctime(dtint)        # date string
+    dtstr = ctime(dtint >> 8)        # date string
     llen = randrange(4, 7)      # login is shorter
     login = ''.join(choice(lc) for j in xrange(llen))
     dlen = randrange(llen, 13)  # domain is longer
