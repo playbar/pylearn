@@ -12,7 +12,13 @@ if hasattr(__builtins__, 'xrange'):
 else:
     myrng = range
 
-for i in myrng(randrange(5, 11)):
+rand = randrange(5, 11);
+printf(rand);
+
+mr = range(rand)
+printf(mr)
+
+for i in mr:
     dtint = randrange(2**32)    # pick date
     dtstr = ctime(dtint)        # date string
     llen = randrange(4, 7)      # login is shorter
