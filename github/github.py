@@ -34,6 +34,7 @@ repo = Repo("/mywork/github/pylearn")
 
 print(repo.is_dirty())
 print(repo.git.status());
+# print(repo.git.stash())
 print(repo.git.commit(m='modify code'))
 
 # remote = repo.create_remote(name='github', url='https://github.com/playbar/pylearn.git ')
