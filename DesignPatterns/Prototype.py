@@ -1,81 +1,91 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+原型模式
+
+用原型实例指定创建对象的种类, 并且通过拷贝这些原型创建新的对象
+
+- 原型模型其实是从一个对象再创建另外一个可定制的对象, 而且不需要知道任何创建细节
+- 一般在初始化信息不发生变化的情况下, 克隆是最好的办法, 既隐藏了对象创建的细节, 有提高了性能
+
+在不指定类名的前提下生成实例
+- 对象种类繁多, 无法将它们整合到一个类中
+- 难以根据类生成实例时
+- 解耦框架与生成实例: 让框架不依赖于具体的类, 不能指定类名来生成实例, 要实现注册一个原型
+  然后, 通过复制该实例来生成新的实例
+
+why: 一旦在代码中出现要使用的类的名字, 就无法与该类分离开来, 也就无法实现复用
+
+示例:
+
+"""
 import copy
-from collections import OrderedDict
+from abc import ABCMeta, abstractmethod
 
 
-class Book:
-    def __init__(self, name, authors, price, **rest):
-        '''rest的例子有：出版商、长度、标签、出版日期'''
-        self.name = name
-        self.authors = authors
-        self.price = price  # 单位为美元
-        self.__dict__.update(rest)
+class Prototype(object):
+    """
+    原型类, 声明一个克隆自身的接口
+    """
+    __metaclass__ = ABCMeta
 
-    def __str__(self):
-        mylist = []
-        ordered = OrderedDict(sorted(self.__dict__.items()))
-        for i in ordered.keys():
-            mylist.append('{}: {}'.format(i, ordered[i]))
-            if i == 'price':
-                mylist.append('$')
-            mylist.append('\n')
-            return ''.join(mylist)
+    def __init__(self, id):
+        self.__id = id
+
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, value):
+        self.__id = value
+
+    @abstractmethod
+    def clone(self):
+        pass
 
 
-class Prototype:
+class ConcretePrototypeA(Prototype):
+    """
+    具体原型类, 实现一个克隆自身的操作
+    """
+    def clone(self):
+        # 浅拷贝, 注意
+        return copy.copy(self)
+
+
+class ConcretePrototypeB(Prototype):
+    """
+    具体原型类, 实现一个克隆自身的操作
+    """
+    def clone(self):
+        return copy.copy(self)
+
+
+class Manager(object):
     def __init__(self):
-        self.objects = dict()
+        self._dict = {}
 
-    def register(self, identifier, obj):
-        self.objects[identifier] = obj
+    def register(self, name, prototype):
+        self._dict[name] = prototype
 
-    def unregister(self, identifier):
-        del self.objects[identifier]
-
-    def clone(self, identifier, **attr):
-        found = self.objects.get(identifier)
-        if not found:
-            raise ValueError('Incorrect object identifier: {}'.format(identifier))
-        obj = copy.deepcopy(found)
-        obj.__dict__.update(attr)
-        return obj
-
-
-def main():
-    b1 = Book('The C Programming Language', ('Brian W. Kernighan', 'Dennis M.Ritchie'),
-              price=118, publisher='Prentice Hall', length=228, publication_date='1978-02-22',
-              tags=('C', 'programming', 'algorithms', 'data structures'))
-    prototype = Prototype()
-    cid = 'k&r-first'
-    prototype.register(cid, b1)
-    b2 = prototype.clone(cid, name='The C Programming Language(ANSI)', price=48.99,
-                         length=274, publication_date='1988-04-01', edition=2)
-    for i in (b1, b2):
-        print(i)
-    print("ID b1 : {} != ID b2 : {}".format(id(b1), id(b2)))
+    def create(self, proto_name):
+        p = self._dict.get(proto_name)
+        return p.clone()
 
 
 if __name__ == '__main__':
-    main()
+    ca = ConcretePrototypeA(1)
+    c2 = ca.clone()
+    print c2.id
 
-"""
->>> python3 prototype.py
-authors: ('Brian W. Kernighan', 'Dennis M. Ritchie')
-length: 228
-name: The C Programming Language
-price: 118$
-publication_date: 1978-02-22
-publisher: Prentice Hall
-tags: ('C', 'programming', 'algorithms', 'data structures')
+    # with manager
+    cb = ConcretePrototypeB(2)
 
+    m = Manager()
+    m.register("ca", ca)
+    m.register("cb", cb)
 
-authors: ('Brian W. Kernighan', 'Dennis M. Ritchie')
-edition: 2
-length: 274
-name: The C Programming Language (ANSI)
-price: 48.99$
-publication_date: 1988-04-01
-publisher: Prentice Hall
-tags: ('C', 'programming', 'algorithms', 'data structures')
+    x = m.create("cb")
+    print x.id
 
-ID b1 : 140004970829304 != ID b2 : 140004970829472
-"""
