@@ -66,6 +66,9 @@ class BuilderA(Builder):
     def build_part_2(self):
         self.__product.add("partA2")
 
+    def build_part_3(self):
+        self.__product.add("partA3")
+
     def get_result(self):
         return self.__product
 
@@ -83,6 +86,9 @@ class BuilderB(Builder):
     def build_part_2(self):
         self.__product.add("partB2")
 
+    def build_part_3(self):
+        self.__product.add("partB3");
+
     def get_result(self):
         return self.__product
 
@@ -96,7 +102,8 @@ class Director(object):
     @staticmethod
     def construct(builder):
         builder.build_part_1()
-        builder.build_part_2()
+        builder.build_part_2();
+        builder.build_part_3();
 
 
 if __name__ == '__main__':

@@ -88,5 +88,7 @@ class ConcreteFactory2(AbstractFactory):
 if __name__ == '__main__':
     factory = ConcreteFactory2()
 
-    product_a = factory.create_product_a()
+    product_a = factory.create_product_a();
+    product_b = factory.create_product_b();
     print product_a
+    print product_b

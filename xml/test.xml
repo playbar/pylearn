@@ -1,0 +1,13 @@
+<Result>
+	<weibo id="1">
+		<sentence id="1" opinionated="N">我是句子</sentence>
+		<sentence id="2" opinionated="N">我是句子</sentence>
+		<sentence id="3" opinionated="Y" polarity="NEG">我也是句子</sentence>
+	</weibo>
+	<weibo id="5">
+		<sentence id="1" opinionated="Y" polarity="NEG">句子句子</sentence>
+		<sentence id="2" opinionated="N">依然是句子</sentence>
+		<sentence id="3" opinionated="Y" polarity="POS">最后一个句子</sentence>
+	</weibo>
+</Result>
+
