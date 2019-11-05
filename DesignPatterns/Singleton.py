@@ -28,9 +28,19 @@ class Singleton(type):
 class MyClass(object):
     __metaclass__ = Singleton
 
+    def __init__(self, *args, **kwargs):
+        self.name = "__init__";
+        print( self.name );
+
+    def __call__(self, *args, **kwargs):
+        print "__call__";
+
 
 if __name__ == '__main__':
     a = MyClass()
     b = MyClass()
+    b("test", 1);
     print a == b
     print a is b
+
+
