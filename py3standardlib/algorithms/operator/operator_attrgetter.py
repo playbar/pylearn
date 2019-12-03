@@ -25,3 +25,4 @@ print('arg values:', vals)
 l.reverse()
 print('reversed  :', l)
 print('sorted    :', sorted(l, key=g))
+

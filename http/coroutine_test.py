@@ -3,6 +3,13 @@ from bs4 import BeautifulSoup
 import requests
 from urlparse import urlparse
 
+import urllib2
+import ssl
+
+context1 = ssl._create_unverified_context()
+response = urllib2.urlopen('https://www.python.org/',context = context1)
+print(response.read().decode("utf-8"))
+
 start_url = 'https://www.cnblogs.com'
 trust_host = 'www.cnblogs.com'
 ignore_path = []
