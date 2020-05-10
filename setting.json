@@ -1,0 +1,13 @@
+// 将设置放入该文件，覆盖默认设置
+{
+    // lint python files using flake8.
+    "python.linting.flake8Enabled": true,
+    // 自定义设置
+    "python.linting.flake8Args": [
+        "--ignore=E262,E265,E266,E303",
+        "--max-line-length=248"
+    ],
+    // provider for formatiing.
+    "python.formatting.provider": "yapf",
+    "python.pythonPath": "/program/anaconda3/bin/python"
+}
