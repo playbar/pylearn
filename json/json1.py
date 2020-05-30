@@ -14,6 +14,7 @@ print(json_str) # 结果 {"name": "pengjunlee", "age": 32, "vip": true, "address
 user_dic = json.loads(json_str)
 print(user_dic['address']) # 结果 {'province': 'GuangDong', 'city': 'ShenZhen'}
  
+ 
 # 将 Python 字典直接输出到文件
 with open('pengjunlee.json', 'w', encoding='utf-8') as f:
     json.dump(user_dic, f, ensure_ascii=False, indent=4)
