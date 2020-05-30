@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
  
 import os
-import commands
+
  
 print ('test os.system...')
 command = 'free -m 1> test.txt'
@@ -14,9 +14,10 @@ print ('test os.popen...')
 output = os.popen('cat /root/kangkai/test.txt')
 print (output.read())
  
-print ('test commands...')
-(status, output) = commands.getstatusoutput('ls /root/kangkai/')
-print (status, output)
+# print ('test commands...')
+# import commands
+# (status, output) = commands.getstatusoutput('ls /root/kangkai/')
+# print (status, output)
 
 
 
