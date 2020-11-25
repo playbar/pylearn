@@ -1,20 +1,66 @@
-import xml.etree.cElementTree as et
-import pandas as pd
+# encoding:utf-8
 
-xml_tree = et.ElementTree(file='test.xml')
-dfcols = ['sentence', 'opinionated', 'polarity']
-df_xml = pd.DataFrame(columns=dfcols)
-root = xml_tree.getroot();
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
 
-for sub_node in root:
-    for node in sub_node:
-        #print(node, node.tag, node.attrib, node.text)
-        sentence = node.text
-        opinionated = node.attrib.get('opinionated')
-        polarity = node.attrib.get('polarity')
+# rootfileName="./xmltest.xml"
+rootfileName="./test.xml"
 
-        df_xml = df_xml.append(
-            pd.Series([sentence, opinionated, polarity], index=dfcols),
-            ignore_index=True)
 
+def readXML():
+	tree = ET.ElementTree(file='test.xml')
+	map = tree.getroot();
+	print(map.tag, map.attrib)
+	for datasource in map:
+		print(datasource.tag, datasource.attrib)
+		print(datasource.attrib['name'], datasource.attrib['type'])
+		key = datasource.attrib;
+		print(list(key.keys()))
+		for style in datasource:
+			print(style.attrib['name'])
+			for rule in style:
+				scale = rule.find('test1')
+				print(scale.tag, scale.text)
+
+				catalog = rule.find('test2');
+				print(catalog.tag, catalog.text)
+
+				code = rule.find('test3');
+				print(code.tag, code.text)
+
+				priority = rule.find('test4')
+				print(priority.tag, priority.text)
+
+
+		if 'href' in datasource.attrib:
+			print(datasource.attrib['href'])
+			subtree = ET.ElementTree(file=datasource.attrib['href'])
+			subMap = subtree.getroot();
+			print(subMap.tag, subMap.attrib['name'])
+			for rule in subMap:
+				scale = rule.find('test1')
+				print(scale.tag, scale.text)
+
+				catalog = rule.find('test2');
+				print(catalog.tag, catalog.text)
+
+				code = rule.find('test2');
+				print(code.tag, code.text)
+
+				priority = rule.find('test3')
+				print(priority.tag, priority.text)
+	tree.write('person.xml', 'utf-8','<?xml version="1.0" encoding="utf-8"?>')
+
+def writeXML():
+	print("writeXML")
+	root = ET.Element('QuoteWerksXML')
+	tree = ET.ElementTree(root)
+	ver = ET.SubElement(root, "AppVersionMajor")
+	ver.text = '5.1'
+	tree.write('person.xml')
+
+if __name__ == '__main__':
+	readXML()
 
